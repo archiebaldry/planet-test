@@ -1,0 +1,95 @@
+[gd_scene load_steps=14 format=3 uid="uid://stv64lt6kr3w"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_8mx62"]
+[ext_resource type="Script" path="res://char.gd" id="2_c60op"]
+[ext_resource type="Texture2D" uid="uid://d3dbylw21urin" path="res://grid.png" id="3_1q3pv"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_odn7w"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_yq7nh"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_bm1o7"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qo1nm"]
+radius = 128.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_653cw"]
+albedo_texture = ExtResource("3_1q3pv")
+uv1_triplanar = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_at4ox"]
+material = SubResource("StandardMaterial3D_653cw")
+radius = 128.0
+height = 256.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_e2ruo"]
+radius = 160.0
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ya0um"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_6tavo"]
+sky_material = SubResource("ProceduralSkyMaterial_ya0um")
+
+[sub_resource type="Environment" id="Environment_slpin"]
+background_mode = 2
+sky = SubResource("Sky_6tavo")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_8mx62")
+
+[node name="Char" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 128, 0)
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+can_sleep = false
+script = ExtResource("2_c60op")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="Char"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_odn7w")
+
+[node name="Body" type="MeshInstance3D" parent="Char"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_yq7nh")
+
+[node name="Head" type="MeshInstance3D" parent="Char"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+mesh = SubResource("BoxMesh_bm1o7")
+
+[node name="Camera" type="Camera3D" parent="Char/Head"]
+
+[node name="TpCamera" type="Camera3D" parent="Char"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 3, 4)
+current = true
+
+[node name="Label" type="Label" parent="Char"]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+
+[node name="Planet" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape" type="CollisionShape3D" parent="Planet"]
+shape = SubResource("SphereShape3D_qo1nm")
+
+[node name="MeshInstance" type="MeshInstance3D" parent="Planet/CollisionShape"]
+mesh = SubResource("SphereMesh_at4ox")
+
+[node name="Area" type="Area3D" parent="Planet"]
+gravity_space_override = 3
+gravity_point = true
+
+[node name="CollisionShape" type="CollisionShape3D" parent="Planet/Area"]
+shape = SubResource("SphereShape3D_e2ruo")
+
+[node name="Env" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_slpin")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
