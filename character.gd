@@ -34,7 +34,8 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 		apply_impulse(Vector3.UP * JUMP, basis.y)
 
 func _process(_delta: float) -> void:
-	label.text = "Position: %s\nRotation: %s\n\nBasis X: %s\nBasis Y: %s\nBasis Z: %s" % [
+	label.text = "Altitude: %.1f\n\nPosition: %s\nRotation: %s\n\nBasis X: %s\nBasis Y: %s\nBasis Z: %s" % [
+		planet.position.distance_to(position),
 		position.snapped(Vector3.ONE * 0.1),
 		rotation_degrees.snapped(Vector3.ONE * 0.1),
 		basis.x.snapped(Vector3.ONE * 0.001),
