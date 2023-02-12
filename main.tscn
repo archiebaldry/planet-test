@@ -58,8 +58,10 @@ shape = SubResource("CapsuleShape3D_pgv6l")
 [node name="Body" type="MeshInstance3D" parent="Character/CollisionShape"]
 mesh = SubResource("CapsuleMesh_jcwch")
 
-[node name="Camera" type="Camera3D" parent="Character"]
+[node name="CameraPivot" type="Node3D" parent="Character"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="Camera" type="Camera3D" parent="Character/CameraPivot"]
 current = true
 fov = 90.0
 

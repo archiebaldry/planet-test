@@ -1,10 +1,13 @@
 extends RigidBody3D
 
 @onready var planet: StaticBody3D = get_node("../Planet")
+@onready var camera_pivot: Node3D = $CameraPivot
+@onready var camera: Camera3D = $CameraPivot/Camera
 @onready var label: Label = $Label
 
 const SPEED: int = 1000
 const JUMP: int = 5
+const MOUSE_SENSITIVITY: float = 0.001
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	# Orient character to ground
@@ -42,3 +45,12 @@ func _process(_delta: float) -> void:
 		basis.y.snapped(Vector3.ONE * 0.001),
 		basis.z.snapped(Vector3.ONE * 0.001)
 	]
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		# Left/right
+		camera_pivot.rotate_y(-event.relative.x * MOUSE_SENSITIVITY)
+		
+		# Up/down
+		camera.rotate_x(-event.relative.y * MOUSE_SENSITIVITY)
+		camera.rotation.x = clamp(camera.rotation.x, -PI/2, PI/2)
