@@ -1,8 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://stv64lt6kr3w"]
+[gd_scene load_steps=13 format=3 uid="uid://dnxbco42x3p51"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_8mx62"]
 [ext_resource type="Script" path="res://character.gd" id="2_c7026"]
-[ext_resource type="Texture2D" uid="uid://d3dbylw21urin" path="res://grid.png" id="3_1q3pv"]
+[ext_resource type="Texture2D" uid="uid://dtwqbi3w2xiv7" path="res://Assets/earth.jpg" id="3_stxfs"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pgv6l"]
 radius = 0.3
@@ -16,8 +16,7 @@ height = 1.8
 radius = 256.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_653cw"]
-albedo_texture = ExtResource("3_1q3pv")
-uv1_triplanar = true
+albedo_texture = ExtResource("3_stxfs")
 
 [sub_resource type="SphereMesh" id="SphereMesh_at4ox"]
 material = SubResource("StandardMaterial3D_653cw")
