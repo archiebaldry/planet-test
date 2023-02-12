@@ -22,16 +22,16 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	
 	# Move character by input
 	if Input.is_action_pressed("move_forward"):
-		apply_force(-basis.z * SPEED * state.step)
+		apply_force(-basis.z.rotated(gravity_up, camera_pivot.rotation.y) * SPEED * state.step)
 	
 	if Input.is_action_pressed("move_back"):
-		apply_force(basis.z * SPEED * state.step)
+		apply_force(basis.z.rotated(gravity_up, camera_pivot.rotation.y) * SPEED * state.step)
 	
 	if Input.is_action_pressed("move_left"):
-		apply_force(-basis.x * SPEED * state.step)
+		apply_force(-basis.x.rotated(gravity_up, camera_pivot.rotation.y) * SPEED * state.step)
 	
 	if Input.is_action_pressed("move_right"):
-		apply_force(basis.x * SPEED * state.step)
+		apply_force(basis.x.rotated(gravity_up, camera_pivot.rotation.y) * SPEED * state.step)
 	
 	if Input.is_action_just_pressed("jump"):
 		apply_impulse(Vector3.UP * JUMP, basis.y)
