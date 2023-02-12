@@ -34,7 +34,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 		apply_force(basis.x.rotated(gravity_up, camera_pivot.rotation.y) * SPEED * state.step)
 	
 	if Input.is_action_just_pressed("jump"):
-		apply_impulse(Vector3.UP * JUMP, basis.y)
+		apply_impulse(basis.y * JUMP)
 
 func _process(_delta: float) -> void:
 	label.text = "Altitude: %.1f\n\nPosition: %s\nRotation: %s\nVelocity: %s\n\nBasis X: %s\nBasis Y: %s\nBasis Z: %s" % [
