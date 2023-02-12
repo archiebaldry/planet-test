@@ -5,7 +5,7 @@ extends RigidBody3D
 @onready var camera: Camera3D = $CameraPivot/Camera
 @onready var label: Label = $Label
 
-const SPEED: int = 1000
+const SPEED: int = 800
 const JUMP: int = 5
 const MOUSE_SENSITIVITY: float = 0.001
 
