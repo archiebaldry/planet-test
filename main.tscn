@@ -22,6 +22,8 @@ albedo_texture = ExtResource("3_stxfs")
 material = SubResource("StandardMaterial3D_653cw")
 radius = 256.0
 height = 512.0
+radial_segments = 128
+rings = 64
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_e2ruo"]
 radius = 512.0
