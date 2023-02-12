@@ -1,14 +1,19 @@
-[gd_scene load_steps=14 format=3 uid="uid://stv64lt6kr3w"]
+[gd_scene load_steps=15 format=3 uid="uid://stv64lt6kr3w"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_8mx62"]
-[ext_resource type="Script" path="res://char.gd" id="2_c60op"]
+[ext_resource type="Script" path="res://character.gd" id="2_c7026"]
 [ext_resource type="Texture2D" uid="uid://d3dbylw21urin" path="res://grid.png" id="3_1q3pv"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_odn7w"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pgv6l"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_yq7nh"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_jcwch"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_bm1o7"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v6d1a"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_w0qai"]
+material = SubResource("StandardMaterial3D_v6d1a")
+size = Vector3(0.5, 0.2, 0.2)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_qo1nm"]
 radius = 128.0
@@ -41,36 +46,35 @@ glow_enabled = true
 [node name="Main" type="Node3D"]
 script = ExtResource("1_8mx62")
 
-[node name="Char" type="RigidBody3D" parent="."]
+[node name="Character" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 128, 0)
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
 can_sleep = false
-script = ExtResource("2_c60op")
+script = ExtResource("2_c7026")
 
-[node name="CollisionShape" type="CollisionShape3D" parent="Char"]
+[node name="CollisionShape" type="CollisionShape3D" parent="Character"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_odn7w")
+shape = SubResource("CapsuleShape3D_pgv6l")
 
-[node name="Body" type="MeshInstance3D" parent="Char"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_yq7nh")
+[node name="Body" type="MeshInstance3D" parent="Character/CollisionShape"]
+mesh = SubResource("CapsuleMesh_jcwch")
 
-[node name="Head" type="MeshInstance3D" parent="Char"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-mesh = SubResource("BoxMesh_bm1o7")
+[node name="Eyes" type="MeshInstance3D" parent="Character/CollisionShape"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.5)
+mesh = SubResource("BoxMesh_w0qai")
 
-[node name="Camera" type="Camera3D" parent="Char/Head"]
-
-[node name="TpCamera" type="Camera3D" parent="Char"]
-transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 3, 4)
+[node name="Camera" type="Camera3D" parent="Character"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 2.5, 3)
 current = true
+fov = 90.0
 
-[node name="Label" type="Label" parent="Char"]
+[node name="Label" type="Label" parent="Character"]
 offset_right = 40.0
 offset_bottom = 23.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="Planet" type="StaticBody3D" parent="."]
 
@@ -83,6 +87,8 @@ mesh = SubResource("SphereMesh_at4ox")
 [node name="Area" type="Area3D" parent="Planet"]
 gravity_space_override = 3
 gravity_point = true
+gravity_point_center = Vector3(0, 0, 0)
+gravity_direction = Vector3(0, 0, 0)
 
 [node name="CollisionShape" type="CollisionShape3D" parent="Planet/Area"]
 shape = SubResource("SphereShape3D_e2ruo")
